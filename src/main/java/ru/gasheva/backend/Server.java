@@ -33,11 +33,12 @@ public class Server {
 
 
         BufferedReader br = new BufferedReader(new InputStreamReader(client.getInputStream()));
-        System.out.println(br.readLine());
+        boolean ans = br.readLine().toLowerCase().equals("true");
+        System.out.println("Ответ от клиента - " + ans);
 
         out.close();
         br.close();
-        return false;
+        return ans;
     }
     public boolean startServer() throws IOException {
         boolean isAllRight=false;

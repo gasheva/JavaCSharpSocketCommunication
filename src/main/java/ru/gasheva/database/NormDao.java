@@ -1,7 +1,8 @@
 package ru.gasheva.database;
 
 import com.google.gson.Gson;
-import ru.gasheva.backend.ForExcelEntity;
+import ru.gasheva.backend.Message;
+import ru.gasheva.backend.MessagePart;
 import ru.gasheva.backend.NotNormEntity;
 import ru.gasheva.backend.normEntities.*;
 
@@ -128,7 +129,7 @@ public class NormDao {
         return null;
     }
 
-    public List<ForExcelEntity> readRequestForXML(){
+    public List<MessagePart> readRequestForXML(){
         Gson gson = new Gson();
         try(Connection conn=dataSource.getConnection()){
             //получаем все проверки за последние 5 лет TODO
@@ -139,9 +140,9 @@ public class NormDao {
                     "JOIN gallery ON paint_checking.id_gal = gallery.id\n" +
                     "WHERE date_part('year', check_date)>date_part('year', current_date)-500;");
             ResultSet rs = preparedStatement.executeQuery();
-            List<ForExcelEntity> entities = new LinkedList<>();
+            List<MessagePart> entities = new LinkedList<>();
             while(rs.next()){
-                ForExcelEntity entity = new ForExcelEntity(LocalDate.parse(rs.getObject("check_date").toString()),
+                MessagePart entity = new MessagePart(LocalDate.parse(rs.getObject("check_date").toString()),
                         rs.getString("checker_name"), rs.getBoolean("need_rest"), rs.getInt("id"), rs.getString("paint_name"), rs.getString("fio"),
                         rs.getString("gallery_name"));
                 entities.add(entity);

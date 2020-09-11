@@ -7,9 +7,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ForExcelEntity {
-    private String header;
-    private List<String> tableHeaders;
+public class MessagePart {
     private LocalDate checkDate;
     private String checkerName;
     private boolean needRest;
@@ -18,11 +16,7 @@ public class ForExcelEntity {
     private String artistFio;
     private String gallery;
 
-    public ForExcelEntity(LocalDate checkDate, String checkerName, boolean needRest, int paintId, String paintName, String artistFio, String gallery) {
-        this.header = "Отчет по проверкам за последние 5 лет";
-        this.tableHeaders = new LinkedList<String>();
-        tableHeaders.addAll(Arrays.asList("Дата проверки", "ФИО проверяющего", "Необходимость реставрации",
-                "ID картины", "Название картины", "Художник", "Галерея"));
+    public MessagePart(LocalDate checkDate, String checkerName, boolean needRest, int paintId, String paintName, String artistFio, String gallery) {
         this.checkDate = checkDate;
         this.checkerName = checkerName;
         this.needRest = needRest;
@@ -30,22 +24,6 @@ public class ForExcelEntity {
         this.paintName = paintName;
         this.artistFio = artistFio;
         this.gallery = gallery;
-    }
-
-    public String getHeader() {
-        return header;
-    }
-
-    public void setHeader(String header) {
-        this.header = header;
-    }
-
-    public List<String> getTableHeaders() {
-        return tableHeaders;
-    }
-
-    public void setTableHeaders(List<String> tableHeaders) {
-        this.tableHeaders = tableHeaders;
     }
 
     public LocalDate getCheckDate() {
