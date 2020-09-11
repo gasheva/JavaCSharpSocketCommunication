@@ -42,8 +42,8 @@ public class Server {
     }
     public boolean startServer() throws IOException {
         boolean isAllRight=false;
-        //Runtime runtime = Runtime.getRuntime();
-        //Process process = runtime.exec("C:\\Users\\Таня\\source\\repos\\ExcelReportWriter\\ExcelReportWriter\\bin\\Debug\\ExcelReportWriter.exe");
+        Runtime runtime = Runtime.getRuntime();
+        Process process = runtime.exec("C:\\Users\\Таня\\source\\repos\\ExcelReportWriter\\ExcelReportWriter\\bin\\Debug\\ExcelReportWriter.exe");
 
         while(!server.isClosed()){
             try {
@@ -59,10 +59,10 @@ public class Server {
                 if (!server.isClosed()){server.close();}
                 System.out.println("Сервер закрыт - "+server.isClosed());
                 System.out.println(e.getMessage());
-                //process.destroy();
                 //System.exit(1);
             }
         }
+        process.destroy();
         return isAllRight;
     }
 }
