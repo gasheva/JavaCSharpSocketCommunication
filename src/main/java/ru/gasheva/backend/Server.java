@@ -23,26 +23,31 @@ public class Server {
         }
     }
     private boolean handleWithSocket() throws IOException {
+        InputStream is = client.getInputStream();
+        OutputStream os = client.getOutputStream();
 
+        // Receiving
+        byte[] lenBytes = new byte[4];
+        is.read(lenBytes, 0, 4);
+        int len = (((lenBytes[3] & 0xff) << 24) | ((lenBytes[2] & 0xff) << 16) |
+                ((lenBytes[1] & 0xff) << 8) | (lenBytes[0] & 0xff));
+        byte[] receivedBytes = new byte[len];
+        is.read(receivedBytes, 0, len);
+        String received = new String(receivedBytes, 0, len);
 
+        System.out.println("Server received: " + received);
 
-        PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-        System.out.println(message);
-        out.print(message);
-        out.flush();
-
-
-        boolean isAllRight = false;
-        System.out.println("Ждем ответа от клиента");
-        client.setSoTimeout(5*1000);
-        InputStream stream = client.getInputStream();
-        byte[] data = new byte[10];
-        stream.read(data);
-        System.out.println(data);
-
-        stream.close();
-        out.close();
-        System.out.println("Ответ получен. Все в порядке? -");
+        // Sending
+        String toSend = "Echo: " + received;
+        byte[] toSendBytes = toSend.getBytes();
+        int toSendLen = toSendBytes.length;
+        byte[] toSendLenBytes = new byte[4];
+        toSendLenBytes[0] = (byte)(toSendLen & 0xff);
+        toSendLenBytes[1] = (byte)((toSendLen >> 8) & 0xff);
+        toSendLenBytes[2] = (byte)((toSendLen >> 16) & 0xff);
+        toSendLenBytes[3] = (byte)((toSendLen >> 24) & 0xff);
+        os.write(toSendLenBytes);
+        os.write(toSendBytes);
 
         return false;
     }
