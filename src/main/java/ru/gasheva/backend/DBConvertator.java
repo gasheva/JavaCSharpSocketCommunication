@@ -13,5 +13,6 @@ public class DBConvertator {
         notNormEntities.forEach(normDao::createArtist);
         notNormEntities.forEach(normDao::createPaint);
         notNormEntities.forEach(normDao::createPaintChecking);
+        System.out.println("Writing to DB...");
     }
 }

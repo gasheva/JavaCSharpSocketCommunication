@@ -1,9 +1,12 @@
 package ru.gasheva.database;
 
+import com.google.gson.Gson;
+import ru.gasheva.backend.ForExcelEntity;
 import ru.gasheva.backend.NotNormEntity;
 import ru.gasheva.backend.normEntities.*;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -119,6 +122,31 @@ public class NormDao {
                 checkerEntities.add(checkerEntity);
             }
             return checkerEntities;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<ForExcelEntity> readRequestForXML(){
+        Gson gson = new Gson();
+        try(Connection conn=dataSource.getConnection()){
+            //получаем все проверки за последние 5 лет TODO
+            PreparedStatement preparedStatement = conn.prepareStatement("SELECT paint_checking.check_date, checker.name as checker_name, need_rest, paint.id, paint.name as paint_name, artists.fio, gallery.name as gallery_name FROM paint_checking\n" +
+                    "JOIN checker ON paint_checking.id_checker = checker.id\n" +
+                    "JOIN paint ON paint_checking.id_paint = paint.id\n" +
+                    "JOIN artists ON paint.id_artist = artists.id\n" +
+                    "JOIN gallery ON paint_checking.id_gal = gallery.id\n" +
+                    "WHERE date_part('year', check_date)>date_part('year', current_date)-500;");
+            ResultSet rs = preparedStatement.executeQuery();
+            List<ForExcelEntity> entities = new LinkedList<>();
+            while(rs.next()){
+                ForExcelEntity entity = new ForExcelEntity(LocalDate.parse(rs.getObject("check_date").toString()),
+                        rs.getString("checker_name"), rs.getBoolean("need_rest"), rs.getInt("id"), rs.getString("paint_name"), rs.getString("fio"),
+                        rs.getString("gallery_name"));
+                entities.add(entity);
+            }
+            return entities;
         } catch (SQLException e) {
             e.printStackTrace();
         }
