@@ -21,18 +21,6 @@ public class MainModel {
         this.normDao=normDao;
         this.notNormDao = notNormDao;
     }
-    public boolean writeToExcel(){
-        String message = JSONParser.Parser(normDao.readRequestForXML());
-        System.out.println(message);
-        Server server = new Server(message);
-        boolean isAllRight=false;
-        try {
-            isAllRight = server.startServer();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return isAllRight;
-    }
     public boolean writeToDB(){
         return DBConvertator.writeToNormDB(notNormDao, normDao);
     }

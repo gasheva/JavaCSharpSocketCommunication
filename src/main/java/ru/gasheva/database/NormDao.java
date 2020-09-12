@@ -138,7 +138,7 @@ public class NormDao {
                     "JOIN paint ON paint_checking.id_paint = paint.id\n" +
                     "JOIN artists ON paint.id_artist = artists.id\n" +
                     "JOIN gallery ON paint_checking.id_gal = gallery.id\n" +
-                    "WHERE date_part('year', check_date)>date_part('year', current_date)-500;");
+                    "WHERE date_part('year', check_date)>date_part('year', current_date)-5;");
             ResultSet rs = preparedStatement.executeQuery();
             List<MessagePart> entities = new LinkedList<>();
             while(rs.next()){
