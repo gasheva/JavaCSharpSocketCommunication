@@ -11,14 +11,15 @@ import java.util.List;
 
 public class MainModel {
     List<DBObserver> observers = new ArrayList<>();
-    NotNormDao notNormDao = new NotNormDao();
-    NormDao normDao = new NormDao();
+    NotNormDao notNormDao;
+    NormDao normDao;
 
     public void registerObserver(DBObserver o){
         observers.add(o);
     }
-    public void init(){
-
+    public void init(NormDao normDao, NotNormDao notNormDao){
+        this.normDao=normDao;
+        this.notNormDao = notNormDao;
     }
     public boolean writeToExcel(){
         String message = JSONParser.Parser(normDao.readRequestForXML());
@@ -32,7 +33,7 @@ public class MainModel {
         }
         return isAllRight;
     }
-    public void writeToDB(){
-        DBConvertator.writeToNormDB(notNormDao, normDao);
+    public boolean writeToDB(){
+        return DBConvertator.writeToNormDB(notNormDao, normDao);
     }
 }

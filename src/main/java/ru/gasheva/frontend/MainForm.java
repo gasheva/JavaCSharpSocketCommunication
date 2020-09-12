@@ -47,11 +47,8 @@ public class MainForm extends JFrame implements DBObserver{
     private void BtnExcelPress(){
         controller.writeToExcel();
     }
-    public void WriteToExcelSuccess(){
-        JOptionPane.showMessageDialog(this, "Данные загружены в файл");
-    }
-    public void WriteToExcelFail(){
-        JOptionPane.showMessageDialog(this, "Данные не загружены в файл");
+    public void WriteMessage(String message){
+        JOptionPane.showMessageDialog(this, message);
     }
 
     @Override
