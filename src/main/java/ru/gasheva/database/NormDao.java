@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class NormDao {
-    private DataSource dataSource = new DataSource();
+    private DataSource dataSource = new DataSource("src/main/resources/JdbcConfig.properties");
     public NormDao(){
         try (Connection conn = dataSource.getConnection()){
             PreparedStatement statement = conn.prepareStatement("DELETE FROM paint_checking;");

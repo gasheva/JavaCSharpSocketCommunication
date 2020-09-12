@@ -10,19 +10,20 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DataSource {
-    private static HikariDataSource ds;
-    private static HikariConfig config = new HikariConfig();
+    private HikariDataSource ds;
+    private HikariConfig config = new HikariConfig();
     Properties properties = new Properties();
     FileInputStream fis;
 
-    public DataSource(){
+    public DataSource(String propertiesFile){
         try{
-            fis = new FileInputStream("src/main/resources/JdbcConfig.properties");
+            fis = new FileInputStream(propertiesFile);//"src/main/resources/JdbcConfig.properties"
             properties.load(fis);
         } catch (IOException e) {
             e.printStackTrace();
         }
         config.setJdbcUrl(properties.getProperty("db.url"));
+        //config.setJdbcUrl("jdbc:sqlite:paintingsDB");
         config.setUsername(properties.getProperty("db.login"));
         config.setPassword(properties.getProperty("db.password"));
         ds = new HikariDataSource(config);

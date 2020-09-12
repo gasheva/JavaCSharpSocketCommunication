@@ -2,17 +2,14 @@ package ru.gasheva.database;
 
 import ru.gasheva.backend.NotNormEntity;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 public class NotNormDao {
-    private DataSource dataSource = new DataSource();
+    private DataSource dataSource = new DataSource("src/main/resources/JdbcConfigSqlite.properties");
     public List<NotNormEntity> read() {
         List<NotNormEntity> notNormEntities = new LinkedList<>();
         try(Connection conn = dataSource.getConnection()){
@@ -42,7 +39,8 @@ public class NotNormDao {
                 entity.setGal_name(rs.getString("gal_name"));
                 entity.setGal_location(rs.getString("gal_location"));
                 entity.setId_check_date(rs.getInt("id_check_date"));
-				entity.setCheck_date(LocalDate.parse(rs.getObject("check_date").toString()));
+				entity.setCheck_date(LocalDate.parse(rs.getString("check_date")));
+                System.out.println(entity.getCheck_date());
 				entity.setNeed_rest(rs.getBoolean("need_rest"));
 				entity.setMarks(rs.getString("marks"));
 				entity.setId_paint(rs.getInt("id_paint"));
@@ -54,7 +52,7 @@ public class NotNormDao {
 				entity.setArtist_have_awards(rs.getBoolean("artist_have_awards"));
 				entity.setChecker_id(rs.getInt("checker_id"));
 				entity.setChecker_name(rs.getString("checker_name"));
-				entity.setStart_year(LocalDate.parse(rs.getObject("start_year").toString()));
+				entity.setStart_year(LocalDate.parse(rs.getString("start_year")));
                 notNormEntities.add(entity);
             }
             return notNormEntities;

@@ -19,7 +19,7 @@ public class Server {
         this.message = message;
         try {
             server = new ServerSocket(6666);
-            server.setSoTimeout(40*1000);
+            server.setSoTimeout(80*1000);
         } catch (IOException e) {
             e.printStackTrace();
         }
