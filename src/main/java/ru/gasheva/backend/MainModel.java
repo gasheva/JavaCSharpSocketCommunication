@@ -22,6 +22,7 @@ public class MainModel {
         this.notNormDao = notNormDao;
     }
     public boolean writeToDB(){
-        return DBConvertator.writeToNormDB(notNormDao, normDao);
+        DBConvertator dbConvertator = new DBConvertator();
+        return dbConvertator.writeToNormDB(notNormDao, normDao);
     }
 }

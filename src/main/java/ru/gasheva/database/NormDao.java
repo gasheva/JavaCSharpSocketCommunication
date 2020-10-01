@@ -132,13 +132,13 @@ public class NormDao {
     public List<MessagePart> readRequestForXML(){
         Gson gson = new Gson();
         try(Connection conn=dataSource.getConnection()){
-            //получаем все проверки за последние 5 лет TODO
+            //получаем все проверки
             PreparedStatement preparedStatement = conn.prepareStatement("SELECT paint_checking.check_date, checker.name as checker_name, need_rest, paint.id, paint.name as paint_name, artists.fio, gallery.name as gallery_name FROM paint_checking\n" +
                     "JOIN checker ON paint_checking.id_checker = checker.id\n" +
                     "JOIN paint ON paint_checking.id_paint = paint.id\n" +
                     "JOIN artists ON paint.id_artist = artists.id\n" +
-                    "JOIN gallery ON paint_checking.id_gal = gallery.id\n" +
-                    "WHERE date_part('year', check_date)>date_part('year', current_date)-5;");
+                    "JOIN gallery ON paint_checking.id_gal = gallery.id;" );
+//                    "WHERE date_part('year', check_date)>date_part('year', current_date)-5;");
             ResultSet rs = preparedStatement.executeQuery();
             List<MessagePart> entities = new LinkedList<>();
             while(rs.next()){

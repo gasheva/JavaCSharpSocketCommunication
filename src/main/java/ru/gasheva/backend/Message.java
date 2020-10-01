@@ -11,7 +11,7 @@ public class Message {
 
     public Message(List<MessagePart> messageParts) {
 
-        this.header = "Отчет по проверкам за последние 5 лет";
+        this.header = "Отчет по проверкам";
         this.tableHeaders = new LinkedList<String>();
         tableHeaders.addAll(Arrays.asList("Дата проверки", "ФИО проверяющего", "Необходимость реставрации",
                 "ID картины", "Название картины", "Художник", "Галерея"));

@@ -6,7 +6,7 @@ import ru.gasheva.database.NotNormDao;
 import java.util.List;
 
 public class DBConvertator {
-    public static boolean writeToNormDB(NotNormDao notNormDao, NormDao normDao){
+    public boolean writeToNormDB(NotNormDao notNormDao, NormDao normDao){
         boolean isAllRight=true;
         try {
             List<NotNormEntity> notNormEntities = notNormDao.read();
